@@ -12,6 +12,7 @@ DOCKER_RUN = docker run --rm --privileged \
 	-v "$(OUTPUT_DIR):/output" \
 	-v "$(CACHE_DIR):/cache" \
 	-e CHANNEL=$(CHANNEL) \
+	$(if $(VERSION_FILE),-e VERSION_FILE=$(VERSION_FILE)) \
 	$(if $(DIND_IMAGE),-e DIND_IMAGE=$(DIND_IMAGE)) \
 	-e HOST_UID=$(shell id -u) \
 	-e HOST_GID=$(shell id -g) \
@@ -35,6 +36,7 @@ help:
 	@echo "  IMAGE=<file>       Input image filename (e.g., haos_green-17.0.img.xz)"
 	@echo "  BOARD=<name>       Board name (e.g., green, ova)"
 	@echo "  CHANNEL=<channel>  Version channel: stable, beta, dev (default: stable)"
+	@echo "  VERSION_FILE=<src> Custom version JSON (URL or /input path) overriding CHANNEL's"
 
 docker-image:
 	docker build -t $(IMAGE_NAME) $(if $(DIND_IMAGE),--build-arg DIND_IMAGE=$(DIND_IMAGE)) .
