@@ -8,6 +8,7 @@ fi
 
 # Configurable variables with defaults
 VERSION_ENDPOINT="${VERSION_ENDPOINT:-https://version.home-assistant.io}"
+VERSION_FILE="${VERSION_FILE:-}"
 CHANNEL="${CHANNEL:-stable}"
 CONTAINERS="${CONTAINERS:-supervisor homeassistant dns audio cli multicast observer}"
 WORK_DIR="${WORK_DIR:-/work}"
@@ -398,6 +399,31 @@ get_container_image_name() {
         die "No image pattern found for container: $container"
     fi
     echo "$image"
+}
+
+#
+# Version source helpers
+#
+
+# Write the raw channel version JSON to stdout
+# Reads VERSION_FILE (http(s) URL or local path) when set, otherwise
+# VERSION_ENDPOINT/<channel>.json
+fetch_version_json() {
+    local channel="$1"
+
+    if [ -n "$VERSION_FILE" ]; then
+        case "$VERSION_FILE" in
+            http://*|https://*)
+                curl -fsSL "$VERSION_FILE"
+                ;;
+            *)
+                require_file "$VERSION_FILE"
+                cat "$VERSION_FILE"
+                ;;
+        esac
+    else
+        curl -fsSL "${VERSION_ENDPOINT}/${channel}.json"
+    fi
 }
 
 #

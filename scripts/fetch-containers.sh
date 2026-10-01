@@ -15,7 +15,7 @@ fetch_versions() {
     local arch="$2"
     local machine="$3"
 
-    curl -fsSL "${VERSION_ENDPOINT}/${channel}.json" | jq \
+    fetch_version_json "$channel" | jq \
         --arg arch "$arch" \
         --arg machine "$machine" \
         '{
@@ -95,7 +95,11 @@ main() {
     mkdir -p "$images_dir"
 
     # Fetch version information
-    log "Fetching version information from ${VERSION_ENDPOINT}/${channel}.json..."
+    if [ -n "$VERSION_FILE" ]; then
+        log "Using custom version file: ${VERSION_FILE}"
+    else
+        log "Fetching version information from ${VERSION_ENDPOINT}/${channel}.json..."
+    fi
     local version_json
     version_json=$(fetch_versions "$channel" "$arch" "$machine")
 
