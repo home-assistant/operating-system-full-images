@@ -12,7 +12,7 @@ DOCKER_RUN = docker run --rm --privileged \
 	-v "$(OUTPUT_DIR):/output" \
 	-v "$(CACHE_DIR):/cache" \
 	-e CHANNEL=$(CHANNEL) \
-	$(if $(VERSION_FILE),-e VERSION_FILE=$(VERSION_FILE)) \
+	$(if $(VERSION_FILE),-e "VERSION_FILE=$(VERSION_FILE)") \
 	$(if $(DIND_IMAGE),-e DIND_IMAGE=$(DIND_IMAGE)) \
 	-e HOST_UID=$(shell id -u) \
 	-e HOST_GID=$(shell id -g) \
