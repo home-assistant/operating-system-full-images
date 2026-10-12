@@ -148,7 +148,7 @@ jobs:
 
       - name: Upload raw image
         if: steps.formats.outputs.has_img == 'true'
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           archive: false
           name: haos-${{ matrix.board }}-${{ matrix.version }}-full-${{ needs.resolve-matrix.outputs.build_date }}
@@ -157,7 +157,7 @@ jobs:
 
       - name: Upload QCOW2 image
         if: steps.formats.outputs.has_qcow2 == 'true'
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           archive: false
           name: haos-${{ matrix.board }}-${{ matrix.version }}-full-${{ needs.resolve-matrix.outputs.build_date }}
@@ -166,7 +166,7 @@ jobs:
 
       - name: Upload VMDK image
         if: steps.formats.outputs.has_vmdk == 'true'
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           archive: false
           name: haos-${{ matrix.board }}-${{ matrix.version }}-full-${{ needs.resolve-matrix.outputs.build_date }}
@@ -175,7 +175,7 @@ jobs:
 
       - name: Upload VDI image
         if: steps.formats.outputs.has_vdi == 'true'
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           archive: false
           name: haos-${{ matrix.board }}-${{ matrix.version }}-full-${{ needs.resolve-matrix.outputs.build_date }}
@@ -184,7 +184,7 @@ jobs:
 
       - name: Upload VHDX image
         if: steps.formats.outputs.has_vhdx == 'true'
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           archive: false
           name: haos-${{ matrix.board }}-${{ matrix.version }}-full-${{ needs.resolve-matrix.outputs.build_date }}
@@ -193,7 +193,7 @@ jobs:
 
       - name: Upload OVA image
         if: steps.formats.outputs.has_ova == 'true'
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           archive: false
           name: haos-${{ matrix.board }}-${{ matrix.version }}-full-${{ needs.resolve-matrix.outputs.build_date }}
