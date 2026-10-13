@@ -35,6 +35,7 @@ help:
 	@echo "Options:"
 	@echo "  IMAGE=<path>               Path to HAOS image (*.img.xz or *.qcow2.xz)"
 	@echo "  CHANNEL=<channel>          Version channel: stable, beta, dev (default: stable)"
+	@echo "  VERSION_FILE=<src>         Custom version JSON (URL or path) overriding CHANNEL's"
 	@echo ""
 	@echo "Found input images:"
 	@for img in $(INPUT_IMAGES); do echo "  - $$img"; done
