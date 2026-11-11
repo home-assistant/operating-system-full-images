@@ -30,10 +30,9 @@ on:
 
 permissions: {}
 
-# An explicit shell enables pipefail, so a failed gh api call fails the step
 defaults:
   run:
-    shell: bash
+    shell: bash --noprofile --norc -eo pipefail {0}
 
 concurrency:
   group: full-images-${{ inputs.publish && inputs.channel || github.run_id }}
@@ -241,8 +240,10 @@ jobs:
             jq -s --arg tag "$tag" '[.[] | select(.tag_name == $tag)][0]' > release.json
           resume=false
           if [[ "$(jq -r .id release.json)" != null ]]; then
-            # Never alter an already published release.
-            jq -e '.draft == true' release.json
+            if [[ "$(jq -r .draft release.json)" != true ]]; then
+              echo "::error::Release $tag is already published and will not be modified"
+              exit 1
+            fi
             resume=true
           fi
           # GITHUB_TOKEN can't create a release with --target (needs the workflows
