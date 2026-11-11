@@ -52,3 +52,30 @@ make shell
 Latest supervisor, homeassistant, dns, audio, cli, multicast, observer
 
 Versions fetched from `version.home-assistant.io` based on `CHANNEL` (default: `stable`).
+
+## Releases
+
+Run the `Build single channel images` workflow with:
+
+- `channel`: `stable`, `beta`, or `dev`.
+- `version_sha`: commit in `home-assistant/version` (required for publishing).
+- `publish`: create a release; defaults to artifacts only. Requires `main` and
+  `stable` or `beta`. Beta releases are marked as prereleases.
+- `force`: bypass unchanged-input detection after a builder fix. To reuse a
+  version SHA, delete its release and tag first with
+  `gh release delete <tag> --cleanup-tag`. Published releases are never overwritten.
+
+Image filenames: `haos_<board>-<os>-full-core-<core>-<channel>-<revision>.<format>`.
+
+### Verify downloads
+
+Download the image, `SHA256SUMS`, and `SHA256SUMS.sigstore.json` from the same release:
+
+```bash
+cosign verify-blob SHA256SUMS \
+  --bundle SHA256SUMS.sigstore.json \
+  --certificate-identity 'https://github.com/home-assistant/operating-system-full-images/.github/workflows/build-channel.yml@refs/heads/main' \
+  --certificate-github-workflow-repository 'home-assistant/operating-system-full-images' \
+  --certificate-oidc-issuer 'https://token.actions.githubusercontent.com'
+sha256sum --check --ignore-missing SHA256SUMS
+```
